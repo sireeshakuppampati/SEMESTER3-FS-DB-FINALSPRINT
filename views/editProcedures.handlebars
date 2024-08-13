@@ -1,0 +1,7 @@
+<h1>Edit Medical Procedure</h1>
+<form action="/medical-procedures/{{procedure.id}}" method="post">
+    <input type="text" name="procedure_name" value="{{procedure.procedure_name}}" required>
+    <input type="text" name="description" value="{{procedure.description}}" required>
+    <input type="number" name="cost" value="{{procedure.cost}}" required>
+    <button type="submit">Update Procedure</button>
+</form>

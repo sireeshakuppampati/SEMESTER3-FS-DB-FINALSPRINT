@@ -4,17 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Procedures</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            background-color: lightskyblue;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .show-btn, .search-btn, .add-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-right: 10px;
+        }
+        .show-btn:hover, .search-btn:hover, .add-btn:hover {
+            background-color: #0056b3;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .procedures-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .procedures-list li {
+            margin-bottom: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .procedures-list li strong {
+            display: block;
+            font-size: 18px;
+        }
+        .procedures-list li .actions {
+            margin-top: 10px;
+        }
+        .procedures-list li .actions form {
+            display: inline;
+        }
+        .procedures-list li .actions button {
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .procedures-list li .actions button:hover {
+            background-color: #e60000;
+        }
+        .procedures-list li .actions .edit-btn {
+            background-color: #ffc107;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .procedures-list li .actions .edit-btn:hover {
+            background-color: #e0a800;
+        }
+    </style>
 </head>
 <body>
-    <h1>Medical Procedures</h1>
-    <ul>
+    <div class="header">
+        <h1>Medical Procedures</h1>
+        <div>
+            <a href="/medical-procedures" class="show-btn">Show Procedures</a>
+            <a href="/medical-procedures/search" class="search-btn">Search Procedures</a>
+            <a href="/medical-procedures/add" class="add-btn">Add Procedure</a>
+        </div>
+    </div>
+    <form method="GET" action="/medical-procedures/search">
+        <input type="text" name="procedure_name" placeholder="Search procedures by name">
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+    <ul class="procedures-list">
         {{#each procedures}}
-            <li>
-                <strong>{{name}}</strong>: {{description}} (Cost: ${{cost}})
-            </li>
+        <li>
+            <strong>{{this.name}}</strong>
+            <p>{{this.description}}</p>
+            <p>Cost: {{this.cost}}</p>
+            <div class="actions">
+                <a href="/medical-procedures/edit/{{this.id}}" class="edit-btn">Edit</a>
+                <form method="POST" action="/medical-procedures/delete/{{this.id}}" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </li>
         {{/each}}
     </ul>
-    <a href="/">Back to Home</a>
 </body>
 </html>

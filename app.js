@@ -22,13 +22,22 @@ app.set('view engine', 'handlebars');
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB connected...'))
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1); // Exit the process if connection fails
+    });
 
 // Import routes
 const indexRoutes = require('./routes/index');
 
 // Use routes
 app.use('/', indexRoutes);
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

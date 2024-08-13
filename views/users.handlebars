@@ -4,17 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            background-color: lightpink;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .show-btn, .add-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-right: 10px;
+        }
+        .show-btn:hover, .add-btn:hover {
+            background-color: #0056b3;
+        }
+        .users-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .users-list li {
+            margin-bottom: 10px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Users</h1>
-    <ul>
+    <div class="header">
+        <h1>Users</h1>
+        <div>
+            <a href="/users" class="show-btn">Show Users</a>
+            <a href="/users/add" class="add-btn">Add User</a>
+        </div>
+    </div>
+    <ul class="users-list">
         {{#each users}}
-            <li>
-                <strong>{{name}}</strong>: {{email}}
-            </li>
+        <li>
+            <strong>{{this.name}}</strong>
+            <p>Email: {{this.email}}</p>
+            <div class="actions">
+                <a href="/users/edit/{{this._id}}" class="edit-btn">Edit</a>
+                <form method="POST" action="/users/delete/{{this._id}}" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </li>
         {{/each}}
     </ul>
-    <a href="/">Back to Home</a>
 </body>
 </html>
